@@ -16,7 +16,7 @@ mail = Mail()
 
 def create_app(config_class=Config):
     app = Flask(__name__)
-    app.config.from_object('Config')
+    app.config.from_object(Config)
 
     db.init_app(app)
     bcrypt.init_app(app)
@@ -31,8 +31,8 @@ def create_app(config_class=Config):
     app.register_blueprint(posts)
     app.register_blueprint(main)
     app.register_blueprint(errors)
-    app.app_context()
-    db.create_all()
+    with app.app_context():
+        db.create_all()
 
 
     return app
